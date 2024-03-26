@@ -1,19 +1,95 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import React from 'react';
+import {Formik} from 'formik';
+import {ThemeColors} from '../constant';
+import IconEntypo from 'react-native-vector-icons/Entypo';
+import {InputField, BaseButton} from '../../components';
+import * as Yup from 'yup';
 
 const Login = () => {
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .email('กรอก E-mail ให้ถูกต้อง')
+      .required('กรุณาระบุ E-mail'),
+    password: Yup.string().required('กรุณาระบุ Password'),
+  });
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.keyboard}>
+      <View style={styles.container}>
+        <View style={styles.boxTitle}>
+          <IconEntypo name="mobile" size={80} color={ThemeColors.white} />
+          <Text style={styles.title}>Test App</Text>
+        </View>
+        <View style={styles.content}>
+          <Formik
+            initialValues={{username: '', password: ''}}
+            onSubmit={values => console.log('===>values', values)}
+            validationSchema={validationSchema}>
+            {({handleSubmit}) => (
+              <View style={styles.form}>
+                <InputField
+                  label="Username"
+                  name="username"
+                  placeholder="E-mail"
+                />
+                <InputField
+                  label="Password"
+                  name="password"
+                  placeholder="Password"
+                  secureText
+                />
+                <View style={styles.space} />
+                <BaseButton label="เข้าสู่ระบบ" onClick={handleSubmit} />
+              </View>
+            )}
+          </Formik>
+        </View>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: ThemeColors.main,
+  },
+  content: {
+    height: '70%',
+    width: '100%',
+    backgroundColor: ThemeColors.white,
+    borderTopStartRadius: 40,
+    borderTopEndRadius: 40,
+  },
+  form: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal: 30,
+    flex: 1,
+  },
+  title: {
+    color: ThemeColors.white,
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+  boxTitle: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  space: {
+    marginTop: 20,
+  },
+  keyboard: {
+    flex: 1,
   },
 });
 
