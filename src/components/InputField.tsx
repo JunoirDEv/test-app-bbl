@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import IconEntypo from 'react-native-vector-icons/Entypo';
-import {ThemeColors} from '../screens/constant';
+import {ThemeColors} from '../constant';
 import {useField, ErrorMessage} from 'formik';
 
 type InputFieldProps = {

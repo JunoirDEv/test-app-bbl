@@ -6,19 +6,39 @@ import {
   Platform,
 } from 'react-native';
 import React from 'react';
+// import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 import {Formik} from 'formik';
-import {ThemeColors} from '../constant';
+import {ThemeColors} from '../../constant';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import {InputField, BaseButton} from '../../components';
 import * as Yup from 'yup';
 
 const Login = () => {
+  const navigation = useNavigation<any>();
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .email('กรอก E-mail ให้ถูกต้อง')
       .required('กรุณาระบุ E-mail'),
     password: Yup.string().required('กรุณาระบุ Password'),
   });
+
+  const onLogin = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    console.log('email', email);
+    console.log('password', password);
+    // const userCredential = await auth().signInWithEmailAndPassword(
+    //   email,
+    //   password,
+    // );
+    navigation.navigate('MainStack');
+    // console.log('userCredential', userCredential);
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -31,7 +51,9 @@ const Login = () => {
         <View style={styles.content}>
           <Formik
             initialValues={{username: '', password: ''}}
-            onSubmit={values => console.log('===>values', values)}
+            onSubmit={values =>
+              onLogin({email: values.username, password: values.password})
+            }
             validationSchema={validationSchema}>
             {({handleSubmit}) => (
               <View style={styles.form}>

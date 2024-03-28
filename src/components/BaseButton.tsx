@@ -1,6 +1,6 @@
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
-import {ThemeColors} from '../screens/constant';
+import {ThemeColors} from '../constant';
 
 type BaseButtonProps = {
   label: string;
