@@ -101,7 +101,7 @@ android {
         versionCode 1
         versionName "1.0"
          manifestPlaceholders = [
-      appAuthRedirectScheme: 'https://dev-yg.us.auth0.com/authorize'
+      appAuthRedirectScheme: 'https://ctsandbox.innohub.app/callback'
     ]
     }
 
