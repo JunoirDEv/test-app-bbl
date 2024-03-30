@@ -1,3 +1,4 @@
 import ThemeColors from './Colors';
+import configOIDC from './ConfigOpenID';
 
-export {ThemeColors};
+export {ThemeColors, configOIDC};

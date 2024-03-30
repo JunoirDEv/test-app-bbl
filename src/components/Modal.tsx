@@ -8,7 +8,7 @@ const ModalView = ({
   children,
 }: {
   isVisible: boolean;
-  onclose: () => void;
+  onclose?: () => void;
   children: ReactElement;
 }) => {
   return (

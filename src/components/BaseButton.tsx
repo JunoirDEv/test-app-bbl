@@ -5,11 +5,18 @@ import {ThemeColors} from '../constant';
 type BaseButtonProps = {
   label: string;
   onClick: () => void;
+  backgroundColor?: string;
 };
 
-const BaseButton = ({label, onClick}: BaseButtonProps) => {
+const BaseButton = ({
+  label,
+  onClick,
+  backgroundColor = ThemeColors.main,
+}: BaseButtonProps) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onClick}>
+    <TouchableOpacity
+      style={[styles.button, {backgroundColor: backgroundColor}]}
+      onPress={onClick}>
       <Text style={styles.text}>{label}</Text>
     </TouchableOpacity>
   );

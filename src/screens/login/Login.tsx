@@ -5,39 +5,33 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
+import {authorize} from 'react-native-app-auth';
 // import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
-import {Formik} from 'formik';
-import {ThemeColors} from '../../constant';
+// import {useNavigation} from '@react-navigation/native';
+// import {Formik} from 'formik';
+import {ThemeColors, configOIDC} from '../../constant';
 import IconEntypo from 'react-native-vector-icons/Entypo';
-import {InputField, BaseButton} from '../../components';
-import * as Yup from 'yup';
+import {BaseButton, Loading} from '../../components';
+// import * as Yup from 'yup';
 
 const Login = () => {
-  const navigation = useNavigation<any>();
-  const validationSchema = Yup.object().shape({
-    username: Yup.string()
-      .email('กรอก E-mail ให้ถูกต้อง')
-      .required('กรุณาระบุ E-mail'),
-    password: Yup.string().required('กรุณาระบุ Password'),
-  });
+  // const navigation = useNavigation<any>();
+  const [loading, setLoading] = useState(false);
+  // const validationSchema = Yup.object().shape({
+  //   username: Yup.string()
+  //     .email('กรอก E-mail ให้ถูกต้อง')
+  //     .required('กรุณาระบุ E-mail'),
+  //   password: Yup.string().required('กรุณาระบุ Password'),
+  // });
 
-  const onLogin = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    console.log('email', email);
-    console.log('password', password);
-    // const userCredential = await auth().signInWithEmailAndPassword(
-    //   email,
-    //   password,
-    // );
-    navigation.navigate('MainStack');
-    // console.log('userCredential', userCredential);
+  const onLogin = async () => {
+    // setLoading(true);
+    console.log('tstttt');
+    const res = await authorize(configOIDC);
+    console.log('res', res);
+
+    setLoading(false);
   };
   return (
     <KeyboardAvoidingView
@@ -49,7 +43,7 @@ const Login = () => {
           <Text style={styles.title}>Test App</Text>
         </View>
         <View style={styles.content}>
-          <Formik
+          {/* <Formik
             initialValues={{username: '', password: ''}}
             onSubmit={values =>
               onLogin({email: values.username, password: values.password})
@@ -68,13 +62,15 @@ const Login = () => {
                   placeholder="Password"
                   secureText
                 />
-                <View style={styles.space} />
-                <BaseButton label="เข้าสู่ระบบ" onClick={handleSubmit} />
-              </View>
             )}
-          </Formik>
+          </Formik> */}
+
+          <View style={styles.space}>
+            <BaseButton label="Log in" onClick={() => onLogin()} />
+          </View>
         </View>
       </View>
+      <Loading isVisible={loading} />
     </KeyboardAvoidingView>
   );
 };
@@ -108,6 +104,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   space: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 20,
     marginTop: 20,
   },
   keyboard: {
